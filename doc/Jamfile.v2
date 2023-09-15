@@ -65,6 +65,8 @@ boostbook standalone
    :
       container
    :
+   <flags>"--maxdepth 100000"
+   <flags>"--maxvars 300000"
         <format>html:<xsl:param>boost.root=../../../..
         <format>html:<xsl:param>boost.libraries=../../../../libs/libraries.htm
         <format>html:<xsl:param>img.src.path=../../../../doc/html/
@@ -74,6 +76,8 @@ boostbook standalone
         <format>pdf:<xsl:param>img.src.path=$(images_location)/
         <dependency>autodoc
         <format>pdf:<xsl:param>boost.url.prefix=http://www.boost.org/doc/libs/release/doc/html
+        <flags>"--maxdepth 100000"
+        <flags>"--maxvars 300000"
 
         # Build requirements go here:
 
