@@ -1,4 +1,4 @@
-name: Docs
+name: Docs2
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ env:
   DEFAULT_BUILD_VARIANT: debug,release
 
 jobs:
-  docs:
+  docs2:
     defaults:
       run:
         shell: bash
@@ -24,7 +24,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            container: cppalliance/boost_superproject_build:24.04-v4
+            container: ubuntu:24.04
 
     timeout-minutes: 240
     runs-on: ${{matrix.os}}
@@ -53,4 +53,4 @@ jobs:
             ls -al
             curl  --retry-all-errors --connect-timeout 15 -sSL --retry 5 -o linuxdocs.sh https://raw.githubusercontent.com/boostorg/release-tools/refs/heads/master/build_docs/linuxdocs.sh
             chmod 755 linuxdocs.sh
-            ./linuxdocs.sh --boostrelease --skip-packages
+            ./linuxdocs.sh --boostrelease
