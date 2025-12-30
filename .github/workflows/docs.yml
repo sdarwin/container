@@ -32,7 +32,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        fetch-depth: 3
+        with:
+          fetch-depth: 3
       - run: >-
           git status
           || git config --system --add safe.directory "$GITHUB_WORKSPACE"
