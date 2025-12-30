@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2009-2020 Ion Gaztañagaz
+ / Copyright (c) 2009-2020 Ion Gaztañaga
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -490,7 +490,7 @@ To avoid unbounded memory waste, Boost.Container's `devector` uses a different s
 * Potentially, the maximum number of possible relocations (movements) reusing the memory buffer are Olog(N),
   but that would lead non-amortized constant-time insertion at the extremes. In consequence, the number of
   relocations must be limited ('relocation limit') and a reallocation (allocation of a new memory buffer) will be
-  performed if the load-factor of the container defined as (`size()/length_of_internal_buffer`) surpasses the relocation limit (see
+  performed if the load-factor of the container defined as (size()/length_of_buffer) surpasses the relocation limit (see
   Lars Greger Nordland Hagen's [@http://larshagencpp.github.io/blog/2016/05/22/devector "Double-ended vector - is it useful?"]
   article for more details).
 
@@ -1115,10 +1115,6 @@ the namespace `boost::container::pmr`. There are two groups,
 and offers some alternative utilities if the required C++11 features of the
 ['Library Fundamentals] specification are not available.
 
-Finally, [*Boost.Container]'s polymorphic resource library includes support for
-dynamic memory allocation for over-aligned types (introduced in C++17), in older
-platforms.
-
 [import ../example/doc_pmr.cpp]
 
 Let's review the usage example given in
@@ -1454,10 +1450,10 @@ use [*Boost.Container]? There are several reasons for that:
 * Uses-allocator construction now handles prefix and suffix allocator conventions even in C++03.
 * Implemented C++20's [funcref boost::container::uninitialized_construct_using_allocator uninitialized_construct_using_allocator]
   and [funcref boost::container::make_obj_using_allocator make_obj_using_allocator].
-* Added `[[nodiscard]]` to several allocator and PMR utilities.
-* Implemented overaligned allocation support for `new_allocator` and `pmr::new_delete_resource()`:
-   * If available, uses C++17's utilities under the `__cpp_aligned_new` feature.
-   * Uses alternative aligned allocation functions (`posix_memalign`, `aligned_alloc`, `_aligned_malloc`...) otherwise.
+* Added [[nodiscard]] to several allocator and PMR utilities.
+* Implemented overaligned operator new/delete support for `new_allocator` and ``pmr::new_delete_resource()`
+  when C++17's `cpp_aligned_new` is available.
+  and [funcref boost::container::make_obj_using_allocator make_obj_using_allocator].
 * Fixed bugs/issues:
    * [@https://github.com/boostorg/container/issues/323 GitHub #323: ['"flat_tree::try_emplace UB"]].
 
