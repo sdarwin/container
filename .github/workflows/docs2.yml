@@ -50,8 +50,7 @@ jobs:
             pwd
             whoami
             ls -al
-            git status
-              || git config --system --add safe.directory "$GITHUB_WORKSPACE"
+            git status || git config --system --add safe.directory "$GITHUB_WORKSPACE"
 
       - uses: dorny/paths-filter@v3
         id: changes
