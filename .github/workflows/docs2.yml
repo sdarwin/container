@@ -39,8 +39,6 @@ jobs:
             ls -al
             apt-get update
             apt-get install -y curl sudo git wget
-            git status
-              || git config --system --add safe.directory "$GITHUB_WORKSPACE"
 
       - uses: actions/checkout@v4
         with:
