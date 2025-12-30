@@ -34,9 +34,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 3
-      - run: >-
-          git status
-          || git config --system --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Packages
+        run: |
+            set -xe
+            pwd
+            whoami
+            ls -al
+            apt-get update
+            apt-get install -y curl sudo git wget
+            git status
+              || git config --system --add safe.directory "$GITHUB_WORKSPACE"
 
       - uses: dorny/paths-filter@v3
         id: changes
@@ -52,8 +60,6 @@ jobs:
             pwd
             whoami
             ls -al
-            apt-get update
-            apt-get install -y curl sudo git wget
             curl  --retry-all-errors --connect-timeout 15 -sSL --retry 5 -o linuxdocs.sh https://raw.githubusercontent.com/boostorg/release-tools/refs/heads/master/build_docs/linuxdocs.sh
             chmod 755 linuxdocs.sh
             ./linuxdocs.sh --boostrelease
