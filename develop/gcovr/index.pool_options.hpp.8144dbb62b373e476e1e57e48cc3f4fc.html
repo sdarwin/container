@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html class="theme-green">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>include/boost/container/pmr/pool_options.hpp - container</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script>
+      // Apply theme and font size immediately to prevent flash
+      (function() {
+        document.documentElement.classList.add('no-transitions');
+
+        var saved = localStorage.getItem('gcovr-theme');
+        var theme = (saved === 'light' || saved === 'dark') ? saved
+          : window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.backgroundColor = theme === 'light' ? '#ffffff' : '#0d1117';
+
+        // Apply flat mode immediately to prevent sidebar flash
+        if (localStorage.getItem('gcovr-view-mode') === 'flat') {
+          document.documentElement.classList.add('early-flat-mode');
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="index.css"/>
+    <script src="index.js"></script>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar"><script>if(localStorage.getItem('sidebar-collapsed')==='true'){document.currentScript.parentElement.classList.add('collapsed');}else{var sw=localStorage.getItem('gcovr-sidebar-width');if(sw)document.documentElement.style.setProperty('--sidebar-width',sw+'px');}</script>
+        <div class="sidebar-header">
+          <div class="sidebar-header-row">
+            <a href="index.html" class="sidebar-logo" title="Back to index">
+              <svg viewBox="150 150 700 160" class="boost-wordmark"><path fill="#ffa000" d="M292.45,152.89h-93.18l-46.59,80,12.63,21.69,46.57-79.99h47.07c20.07,0,36.38,16.18,36.38,36.07,0,8.46-3.54,18.29-10.84,22.4,7.11,5.3,10.54,13.73,10.54,22.01,0,19.88-16.32,36.06-36.38,36.06h-61.71l16.12-27.7h45.59c4.66,0,8.45-3.75,8.45-8.36s-3.57-8.16-8.05-8.35c-.13-.02-36.25,0-36.25,0l16.14-27.71s20.22.02,20.31,0c1.9-.06,3.63-.74,5-1.85,1.93-1.53,3.15-3.87,3.15-6.5,0-4.62-3.79-8.37-8.45-8.37h-30.03l-47.04,80.75,17.39,29.85h93.18l46.59-80-46.59-80h0Z"/><path fill="currentColor" d="M550.81,291.93c-9.23,0-17.31-2.01-24.23-6.04s-12.29-9.63-16.1-16.83c-3.81-7.19-5.72-15.4-5.72-24.63s1.9-17.6,5.72-24.79c3.81-7.19,9.18-12.82,16.1-16.91,6.92-4.08,15-6.12,24.23-6.12s17.44,2.04,24.31,6.12,12.21,9.72,16.02,16.91,5.72,15.46,5.72,24.79-1.91,17.44-5.72,24.63-9.15,12.8-16.02,16.83c-6.87,4.02-14.97,6.04-24.31,6.04ZM550.81,272.45c5.37,0,9.79-1.23,13.28-3.7,3.49-2.47,6.12-5.82,7.89-10.06s2.66-8.99,2.66-14.25-.89-10.2-2.66-14.49c-1.77-4.29-4.4-7.7-7.89-10.22-3.49-2.52-7.92-3.78-13.28-3.78s-9.82,1.26-13.36,3.78c-3.54,2.52-6.2,5.93-7.97,10.22-1.77,4.29-2.66,9.12-2.66,14.49s.89,10.01,2.66,14.25c1.77,4.24,4.43,7.59,7.97,10.06s7.99,3.7,13.36,3.7Z"/><path fill="currentColor" d="M648.53,291.93c-9.23,0-17.31-2.01-24.23-6.04s-12.29-9.63-16.1-16.83c-3.81-7.19-5.72-15.4-5.72-24.63s1.9-17.6,5.72-24.79c3.81-7.19,9.18-12.82,16.1-16.91,6.92-4.08,15-6.12,24.23-6.12s17.44,2.04,24.31,6.12,12.21,9.72,16.02,16.91,5.72,15.46,5.72,24.79-1.91,17.44-5.72,24.63-9.15,12.8-16.02,16.83c-6.87,4.02-14.97,6.04-24.31,6.04ZM648.53,272.45c5.37,0,9.79-1.23,13.28-3.7,3.49-2.47,6.12-5.82,7.89-10.06s2.66-8.99,2.66-14.25-.89-10.2-2.66-14.49c-1.77-4.29-4.4-7.7-7.89-10.22-3.49-2.52-7.92-3.78-13.28-3.78s-9.82,1.26-13.36,3.78c-3.54,2.52-6.2,5.93-7.97,10.22-1.77,4.29-2.66,9.12-2.66,14.49s.89,10.01,2.66,14.25c1.77,4.24,4.43,7.59,7.97,10.06s7.99,3.7,13.36,3.7Z"/><path fill="currentColor" d="M722.75,260.85c.54,4.62,2.55,7.86,6.04,9.74s7.49,2.82,11.99,2.82,8.21-.8,11.11-2.41c2.9-1.61,4.35-4.24,4.35-7.89,0-2.25-.99-4-2.98-5.23s-4.56-2.2-7.73-2.9c-3.17-.7-6.66-1.37-10.46-2.01-3.81-.64-7.65-1.5-11.51-2.58-3.86-1.07-7.41-2.58-10.63-4.51-3.22-1.93-5.8-4.53-7.73-7.81-1.93-3.27-2.9-7.49-2.9-12.64,0-4.83,1.55-9.47,4.67-13.93,3.11-4.45,7.49-8.05,13.12-10.79,5.63-2.74,12.1-4.11,19.4-4.11,6.55,0,12.61,1.32,18.19,3.95,5.58,2.63,10.06,6.25,13.44,10.87s5.07,9.98,5.07,16.1h-21.41c-.43-4.61-2.15-7.86-5.15-9.74-3.01-1.88-6.6-2.82-10.79-2.82-4.94,0-8.69.99-11.27,2.98s-3.86,4.48-3.86,7.49c0,2.47.99,4.4,2.98,5.8,1.98,1.4,4.56,2.47,7.73,3.22,3.16.75,6.68,1.42,10.55,2.01,3.86.59,7.7,1.4,11.51,2.42,3.81,1.02,7.33,2.47,10.55,4.35s5.8,4.4,7.73,7.57,2.9,7.27,2.9,12.32c0,5.69-1.56,10.71-4.67,15.05-3.11,4.35-7.49,7.73-13.12,10.14-5.64,2.42-12.26,3.62-19.88,3.62-7.08,0-13.52-1.37-19.32-4.11s-10.44-6.44-13.93-11.11c-3.49-4.67-5.34-9.95-5.55-15.86h21.57,0Z"/><path fill="currentColor" d="M815.48,264.84v-47.29h17.55v-18.35h-17.55v-21.78l-34.42,40.14h12.84v51.81c0,11.05,8.95,20,20,20h21.7v-18.52h-14.12c-3.31,0-6-2.69-6-6h0Z"/><path fill="currentColor" d="M494.62,242.26c-2.36-3.92-5.58-7.03-9.66-9.34-1.08-.61-2.19-1.14-3.33-1.61.7-.44,1.36-.91,1.96-1.45,2.95-2.63,5.1-5.82,6.44-9.58,1.34-3.76,2.01-7.35,2.01-10.79,0-8.69-1.99-15.4-5.96-20.12s-9.31-8.02-16.02-9.9c-6.71-1.88-14.14-2.82-22.3-2.82h-34.29v112.7h40.41c8.16,0,15.59-.99,22.3-2.98,6.71-1.98,12.05-5.45,16.02-10.38,3.97-4.94,5.96-11.7,5.96-20.29,0-5.04-1.18-9.53-3.54-13.44ZM472.48,264.8c-1.88,2.09-4.46,3.52-7.73,4.27-3.28.75-6.9,1.13-10.87,1.13h-18.51v-74.54h12.4c4.08,0,7.73.32,10.95.97,3.22.64,5.77,1.96,7.65,3.95,1.88,1.99,2.82,4.91,2.82,8.77s-.94,6.79-2.82,8.78c-1.88,1.99-4.46,3.3-7.73,3.94-1.87.37-3.86.62-5.96.78l-11.25,19.19h12.46c4.08,0,7.73.35,10.95,1.05,3.22.7,5.77,2.01,7.65,3.94s2.82,4.83,2.82,8.69-.94,7-2.82,9.1v-.02Z"/></svg>
+            </a>
+            <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar">
+            <svg class="icon-collapse" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+            <svg class="icon-expand" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+          </button>
+          </div>
+          <div class="sidebar-title-group">
+            <span class="sidebar-library">container</span>
+          </div>
+        </div>
+        <div class="sidebar-search">
+          <input type="text" id="file-search" placeholder="Search files..." autocomplete="off">
+          <button class="search-clear" id="search-clear" type="button" aria-label="Clear search">&times;</button>
+        </div>
+        <div class="tree-controls">
+          <button class="tree-control-btn" id="expand-all" title="Expand all">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 1z"/></svg>
+            Expand
+          </button>
+          <button class="tree-control-btn" id="collapse-all" title="Collapse all">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 8a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11A.5.5 0 012 8z"/></svg>
+            Collapse
+          </button>
+        </div>
+        <nav class="sidebar-nav" id="file-tree">
+<div class="tree-item">
+  <div class="tree-item-header">
+    <a href="index.html" class="tree-toggle" title="Back to directory">
+      <span class="toggle-icon">&larr;</span>
+    </a>
+    <span class="tree-icon folder">
+      <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M1.75 1A1.75 1.75 0 000 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0016 13.25v-8.5A1.75 1.75 0 0014.25 3H7.5a.25.25 0 01-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75z"></path></svg>
+    </span>
+    <a class="tree-label" href="index.html">Back to Index</a>
+  </div>
+</div>
+<div class="tree-item active">
+  <div class="tree-item-header">
+    <span class="tree-toggle-spacer"></span>
+    <span class="tree-icon file">
+      <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M3.75 1.5a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 00.25-.25V6h-2.75A1.75 1.75 0 019 4.25V1.5H3.75zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-2.938-2.938zM2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0113.25 16h-9.5A1.75 1.75 0 012 14.25V1.75z"></path></svg>
+    </span>
+    <span class="tree-label">include/boost/container/pmr/pool_options.hpp</span>
+  </div>
+</div>
+        </nav>
+        <div class="sidebar-resize-handle" id="sidebar-resize-handle"></div>
+      </aside>
+
+      <!-- Mobile sidebar backdrop -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="main-header">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" title="Open menu">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+          </button>
+          <div class="breadcrumb">
+<a href="index.html" class="breadcrumb-home">Index</a><span class="separator">/</span><span class="current">include / boost / container / pmr / pool_options.hpp</span>          </div>
+          <div class="header-actions">
+          </div>
+          <div class="view-toggle" id="view-toggle" style="display:none">
+            <button class="view-btn active" data-view="nested">Nested</button>
+            <button class="view-btn" data-view="flat">Flat</button>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+            <svg class="icon-moon" viewBox="0 0 16 16" fill="currentColor"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>
+            <svg class="icon-sun" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>
+          </button>
+          <button class="settings-btn" id="settings-btn" title="Settings">
+            <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor"><path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 002.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 001.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 00-1.115 2.693l.16.291c.415.764-.421 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 00-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 00-2.692-1.115l-.292.16c-.764.415-1.6-.421-1.184-1.185l.159-.291A1.873 1.873 0 001.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 003.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 002.692-1.115l.094-.319z"/></svg>
+          </button>
+          <div class="settings-dropdown" id="settings-dropdown"></div>
+        </header>
+
+        <div class="content-wrapper">
+          <section class="summary-section">
+<div class="source-summary">
+  <div class="source-info">
+    <h2 class="source-filename">include/boost/container/pmr/pool_options.hpp</h2>
+    <div class="source-stats">
+      <span class="stat coverage-high">
+        <strong>100.0%</strong> Lines (3/3)
+      </span>
+      <span class="stat coverage-high">
+        <strong>100.0%</strong> List of functions (1/1)
+      </span>
+    </div>
+  </div>
+  <div class="nav-hint">
+    <span><kbd>[</kbd> <kbd>]</kbd> prev/next file</span>
+  </div>
+</div>          </section>
+
+          <section class="main-section">
+<div class="source-container no-branches">
+  <div class="source-header">
+    <span class="source-header-filename">pool_options.hpp</span>
+    <div class="source-line-filters">
+      <button type="button" class="btn btn-sm button_toggle_coveredLine show_coveredLine" value="coveredLine" title="Toggle covered lines">
+        covered
+      </button>
+      <button type="button" class="btn btn-sm button_toggle_uncoveredLine show_uncoveredLine" value="uncoveredLine" title="Toggle uncovered lines">
+        uncovered
+      </button>
+    </div>
+    <div class="source-column-filters">
+      <button type="button" class="btn btn-sm col-toggle show-col" data-col="tla" title="Toggle TLA column">TLA</button>
+      <button type="button" class="btn btn-sm col-toggle show-col" data-col="count" title="Toggle Hits column">Hits</button>
+    </div>
+    <div class="source-nav-links">
+      <a class="nav-link nav-prev" href="index.polymorphic_allocator.hpp.68e7a3093e28ffb16ff9621049bf9524.html" title="Previous file">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 2a.75.75 0 01.75.75v8.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 011.06-1.06l3.22 3.22V2.75A.75.75 0 018 2z" transform="rotate(180 8 8)"/></svg>
+      </a>
+      <a class="nav-link nav-next" href="index.resource_adaptor.hpp.ec7f22c8f74a7a6292066d9fab6b07f1.html" title="Next file">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 2a.75.75 0 01.75.75v8.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 011.06-1.06l3.22 3.22V2.75A.75.75 0 018 2z"/></svg>
+      </a>
+    </div>
+  </div>
+
+
+  <details class="source-functions">
+    <summary class="source-functions-toggle">
+      <span class="fx-icon"><i>f</i>(x)</span>
+      Functions (1)
+    </summary>
+    <div class="source-functions-list">
+      <div class="source-function-header">
+        <span class="source-function-col-name" data-sort="name">Function</span>
+        <span class="source-function-col-stat" data-sort="calls">Calls</span>
+        <span class="source-function-col-stat" data-sort="lines">Lines</span>
+        <span class="source-function-col-stat" data-sort="blocks">Blocks</span>
+      </div>
+      <a href="#l41" class="source-function-item"
+         data-name="boost::container::pmr::pool_options::pool_options()" data-calls="40" data-lines="100.0" data-branches="-1" data-blocks="100.0">
+        <span class="source-function-col-name">
+          <span class="source-function-name">boost::container::pmr::pool_options::pool_options()</span>
+          <span class="source-function-line">:41</span>
+        </span>
+        <span class="source-function-col-stat">40x</span>
+        <span class="source-function-col-stat cov-high">100.0%</span>
+        <span class="source-function-col-stat cov-high">100.0%</span>
+      </a>
+    </div>
+  </details>
+
+  <div class="source-table-container">
+    <table class="source-table">
+      <thead>
+        <tr>
+          <th class="col-lineno">Line</th>
+          <th class="col-tla">TLA</th>
+          <th class="col-count">Hits</th>
+          <th class="col-source">Source Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l1">1</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//////////////////////////////////////////////////////////////////////////////</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l2">2</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l3">3</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">// (C) Copyright Ion Gaztanaga 2015-2015. Distributed under the Boost</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l4">4</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">// Software License, Version 1.0. (See accompanying file</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l5">5</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">// LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l6">6</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l7">7</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">// See http://www.boost.org/libs/container for documentation.</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l8">8</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l9">9</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//////////////////////////////////////////////////////////////////////////////</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l10">10</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l11">11</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#ifndef BOOST_CONTAINER_PMR_POOL_OPTIONS_HPP</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l12">12</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#define BOOST_CONTAINER_PMR_POOL_OPTIONS_HPP</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l13">13</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l14">14</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#if defined (_MSC_VER)</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l15">15</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#  pragma once </span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l16">16</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#endif</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l17">17</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l18">18</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstddef&gt;</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l19">19</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l20">20</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="k">namespace</span><span class="w"> </span><span class="nn">boost</span><span class="w"> </span><span class="p">{</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l21">21</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="k">namespace</span><span class="w"> </span><span class="nn">container</span><span class="w"> </span><span class="p">{</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l22">22</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="k">namespace</span><span class="w"> </span><span class="nn">pmr</span><span class="w"> </span><span class="p">{</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l23">23</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l24">24</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//! The members of pool_options comprise a set of constructor options for pool resources.</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l25">25</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//! The effect of each option on the pool resource behavior is described below:</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l26">26</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l27">27</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//! - `std::size_t max_blocks_per_chunk`: The maximum number of blocks that will be allocated</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l28">28</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   at once from the upstream memory resource to replenish a pool. If the value of</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l29">29</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   `max_blocks_per_chunk` is zero or is greater than an implementation-defined limit,</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l30">30</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   that limit is used instead. The implementation may choose to use a smaller value</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l31">31</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   than is specified in this field and may use different values for different pools.</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l32">32</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l33">33</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//! - `std::size_t largest_required_pool_block`: The largest allocation size that is required</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l34">34</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   to be fulfilled using the pooling mechanism. Attempts to allocate a single block</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l35">35</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   larger than this threshold will be allocated directly from the upstream memory</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l36">36</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   resource. If largest_required_pool_block is zero or is greater than an</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l37">37</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   implementation-defined limit, that limit is used instead. The implementation may</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l38">38</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="c1">//!   choose a pass-through threshold larger than specified in this field.</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l39">39</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="k">struct</span><span class="w"> </span><span class="nc">pool_options</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l40">40</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="p">{</span></td>
+        </tr>
+        <tr class="source-line coveredLine show_coveredLine">
+          <td class="col-lineno">
+            <a id="l41">41</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count coveredLine">
+40x          </td>
+          <td class="col-source"><span class="w">   </span><span class="n">pool_options</span><span class="p">()</span></td>
+        </tr>
+        <tr class="source-line coveredLine show_coveredLine">
+          <td class="col-lineno">
+            <a id="l42">42</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count coveredLine">
+40x          </td>
+          <td class="col-source"><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">max_blocks_per_chunk</span><span class="p">(</span><span class="mi">0u</span><span class="p">),</span><span class="w"> </span><span class="n">largest_required_pool_block</span><span class="p">(</span><span class="mi">0u</span><span class="p">)</span></td>
+        </tr>
+        <tr class="source-line coveredLine show_coveredLine">
+          <td class="col-lineno">
+            <a id="l43">43</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count coveredLine">
+40x          </td>
+          <td class="col-source"><span class="w">   </span><span class="p">{}</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l44">44</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">max_blocks_per_chunk</span><span class="p">;</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l45">45</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">largest_required_pool_block</span><span class="p">;</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l46">46</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="p">};</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l47">47</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l48">48</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="p">}</span><span class="w">  </span><span class="c1">//namespace pmr {</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l49">49</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="p">}</span><span class="w">  </span><span class="c1">//namespace container {</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l50">50</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="p">}</span><span class="w">  </span><span class="c1">//namespace boost {</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l51">51</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l52">52</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"><span class="cp">#endif   </span><span class="c1">//BOOST_CONTAINER_PMR_POOL_OPTIONS_HPP</span></td>
+        </tr>
+        <tr class="source-line">
+          <td class="col-lineno">
+            <a id="l53">53</a>
+          </td>
+          <td class="col-tla"></td>
+          <td class="col-count">
+          </td>
+          <td class="col-source"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>          </section>
+        </div>
+
+        <footer class="main-footer">
+          Created using <a href="http://gcovr.com/en/main">GCOVR (Version 8.6+main)</a>
+          at 2026-04-15 15:05:35
+        </footer>
+      </main>
+    </div>
+    <script>window.GCOVR_TREE_DATA=[{"name": "include", "coverage": "57.4", "coverageClass": "coverage-low", "linesTotal": "315830", "linesExec": "181281", "linesCoverage": "57.4", "linesClass": "coverage-low", "functionsCoverage": "69.2", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": true, "link": "index.include.d436eb0fd9de10b54a828ce6435f7e81.html", "children": [{"name": "detail", "coverage": "50.7", "coverageClass": "coverage-low", "linesTotal": "163238", "linesExec": "82703", "linesCoverage": "50.7", "linesClass": "coverage-low", "functionsCoverage": "66.1", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": true, "link": "index.detail.3e33148f289cb1abc6723c974041ca39.html", "children": [{"name": "adaptive_node_pool.hpp", "coverage": "83.6", "coverageClass": "coverage-medium", "linesTotal": "146", "linesExec": "122", "linesCoverage": "83.6", "linesClass": "coverage-medium", "functionsCoverage": "86.4", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.adaptive_node_pool.hpp.1bfacb24b31ba2d3e6285db09b8fbfd8.html", "children": []}, {"name": "adaptive_node_pool_impl.hpp", "coverage": "94.1", "coverageClass": "coverage-high", "linesTotal": "370", "linesExec": "348", "linesCoverage": "94.1", "linesClass": "coverage-high", "functionsCoverage": "90.9", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.adaptive_node_pool_impl.hpp.f0e2e390f4f0b500e105eafc608504eb.html", "children": []}, {"name": "advanced_insert_int.hpp", "coverage": "60.7", "coverageClass": "coverage-low", "linesTotal": "7608", "linesExec": "4619", "linesCoverage": "60.7", "linesClass": "coverage-low", "functionsCoverage": "64.6", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.advanced_insert_int.hpp.3a9c3b675eb51634c81c3550e85c1633.html", "children": []}, {"name": "algorithm.hpp", "coverage": "52.6", "coverageClass": "coverage-low", "linesTotal": "759", "linesExec": "399", "linesCoverage": "52.6", "linesClass": "coverage-low", "functionsCoverage": "47.7", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.algorithm.hpp.abe960a0f45232febd8894f93ea00360.html", "children": []}, {"name": "alloc_helpers.hpp", "coverage": "71.1", "coverageClass": "coverage-low", "linesTotal": "879", "linesExec": "625", "linesCoverage": "71.1", "linesClass": "coverage-low", "functionsCoverage": "71.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.alloc_helpers.hpp.a67c131d1bf8d1f0efd080a91157cd04.html", "children": []}, {"name": "allocator_version_traits.hpp", "coverage": "57.5", "coverageClass": "coverage-low", "linesTotal": "837", "linesExec": "481", "linesCoverage": "57.5", "linesClass": "coverage-low", "functionsCoverage": "59.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.allocator_version_traits.hpp.ba66537fb6de10ffd0300e9cd85e8897.html", "children": []}, {"name": "block_list.hpp", "coverage": "97.3", "coverageClass": "coverage-high", "linesTotal": "37", "linesExec": "36", "linesCoverage": "97.3", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.block_list.hpp.bc60e548f950241478c7c5bc9d102a43.html", "children": []}, {"name": "block_slist.hpp", "coverage": "97.3", "coverageClass": "coverage-high", "linesTotal": "37", "linesExec": "36", "linesCoverage": "97.3", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.block_slist.hpp.624f8f24df2b3b26c819f778c6407690.html", "children": []}, {"name": "compare_functors.hpp", "coverage": "86.2", "coverageClass": "coverage-medium", "linesTotal": "484", "linesExec": "417", "linesCoverage": "86.2", "linesClass": "coverage-medium", "functionsCoverage": "85.6", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.compare_functors.hpp.f6450260470bbf33d3b2a90f9463901c.html", "children": []}, {"name": "construct_in_place.hpp", "coverage": "80.0", "coverageClass": "coverage-medium", "linesTotal": "15", "linesExec": "12", "linesCoverage": "80.0", "linesClass": "coverage-medium", "functionsCoverage": "-", "functionsClass": "coverage-unknown", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.construct_in_place.hpp.474fee42d4e6c2801dc036c0fa6871b5.html", "children": []}, {"name": "copy_move_algo.hpp", "coverage": "27.1", "coverageClass": "coverage-low", "linesTotal": "53613", "linesExec": "14506", "linesCoverage": "27.1", "linesClass": "coverage-low", "functionsCoverage": "49.8", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.copy_move_algo.hpp.59a4378d0ecc3c6d408d78ca682ab8ae.html", "children": []}, {"name": "deque_impl.hpp", "coverage": "60.1", "coverageClass": "coverage-low", "linesTotal": "40344", "linesExec": "24228", "linesCoverage": "60.1", "linesClass": "coverage-low", "functionsCoverage": "76.9", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.deque_impl.hpp.13663449f6a41cb3ea0649a16216cd16.html", "children": []}, {"name": "destroyers.hpp", "coverage": "55.8", "coverageClass": "coverage-low", "linesTotal": "5624", "linesExec": "3137", "linesCoverage": "55.8", "linesClass": "coverage-low", "functionsCoverage": "59.1", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.destroyers.hpp.86925565d1ca4516199f5a220f5da707.html", "children": []}, {"name": "dispatch_uses_allocator.hpp", "coverage": "83.1", "coverageClass": "coverage-medium", "linesTotal": "709", "linesExec": "589", "linesCoverage": "83.1", "linesClass": "coverage-medium", "functionsCoverage": "97.3", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.dispatch_uses_allocator.hpp.809d0b5a64bb655e85bd1fe56d45415e.html", "children": []}, {"name": "flat_tree.hpp", "coverage": "59.1", "coverageClass": "coverage-low", "linesTotal": "22226", "linesExec": "13125", "linesCoverage": "59.1", "linesClass": "coverage-low", "functionsCoverage": "57.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.flat_tree.hpp.82e73058a85bee6dd0faa1f511b245d4.html", "children": []}, {"name": "guards_dended.hpp", "coverage": "84.0", "coverageClass": "coverage-medium", "linesTotal": "612", "linesExec": "514", "linesCoverage": "84.0", "linesClass": "coverage-medium", "functionsCoverage": "90.8", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.guards_dended.hpp.472cee42759b186a78135057a76072d5.html", "children": []}, {"name": "is_contiguous_container.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "3", "linesExec": "3", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "-", "functionsClass": "coverage-unknown", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.is_contiguous_container.hpp.f95951cfa1d0f7afe9c04afbfd12a559.html", "children": []}, {"name": "is_sorted.hpp", "coverage": "49.1", "coverageClass": "coverage-low", "linesTotal": "328", "linesExec": "161", "linesCoverage": "49.1", "linesClass": "coverage-low", "functionsCoverage": "55.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.is_sorted.hpp.aeb94c8677f3e1208381c89dad215813.html", "children": []}, {"name": "iterators.hpp", "coverage": "82.5", "coverageClass": "coverage-medium", "linesTotal": "3760", "linesExec": "3103", "linesCoverage": "82.5", "linesClass": "coverage-medium", "functionsCoverage": "81.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.iterators.hpp.b77db9d7b1ca2af06eb64af8d3a6f74c.html", "children": []}, {"name": "math_functions.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "7", "linesExec": "7", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.math_functions.hpp.af86671b286c3587342fefb3312e0fd9.html", "children": []}, {"name": "min_max.hpp", "coverage": "90.0", "coverageClass": "coverage-high", "linesTotal": "40", "linesExec": "36", "linesCoverage": "90.0", "linesClass": "coverage-high", "functionsCoverage": "90.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.min_max.hpp.42536e315b5663cfae6af96411a86c12.html", "children": []}, {"name": "mpl.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "3", "linesExec": "3", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "-", "functionsClass": "coverage-unknown", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.mpl.hpp.b05a59f897b330029a429735700eb6e4.html", "children": []}, {"name": "multiallocation_chain.hpp", "coverage": "61.7", "coverageClass": "coverage-low", "linesTotal": "951", "linesExec": "587", "linesCoverage": "61.7", "linesClass": "coverage-low", "functionsCoverage": "61.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.multiallocation_chain.hpp.5cd6f31a9f0baf5c7d73aa4488099626.html", "children": []}, {"name": "mutex.hpp", "coverage": "53.3", "coverageClass": "coverage-low", "linesTotal": "15", "linesExec": "8", "linesCoverage": "53.3", "linesClass": "coverage-low", "functionsCoverage": "83.3", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.mutex.hpp.43db45e114ff03a13845fc69ff222fbe.html", "children": []}, {"name": "next_capacity.hpp", "coverage": "71.0", "coverageClass": "coverage-low", "linesTotal": "69", "linesExec": "49", "linesCoverage": "71.0", "linesClass": "coverage-low", "functionsCoverage": "81.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.next_capacity.hpp.e1c24d553870b33bbf196dd3136d66ac.html", "children": []}, {"name": "node_alloc_holder.hpp", "coverage": "68.0", "coverageClass": "coverage-low", "linesTotal": "12206", "linesExec": "8300", "linesCoverage": "68.0", "linesClass": "coverage-low", "functionsCoverage": "72.6", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.node_alloc_holder.hpp.55321600ef64c84604c8b489eab5a49f.html", "children": []}, {"name": "node_pool.hpp", "coverage": "80.5", "coverageClass": "coverage-medium", "linesTotal": "123", "linesExec": "99", "linesCoverage": "80.5", "linesClass": "coverage-medium", "functionsCoverage": "83.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.node_pool.hpp.b06f8003fe331322f0f9211117f09b78.html", "children": []}, {"name": "node_pool_impl.hpp", "coverage": "77.5", "coverageClass": "coverage-medium", "linesTotal": "200", "linesExec": "155", "linesCoverage": "77.5", "linesClass": "coverage-medium", "functionsCoverage": "84.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.node_pool_impl.hpp.2bd4b44d85168234206f12656387e148.html", "children": []}, {"name": "operator_new_helpers.hpp", "coverage": "92.9", "coverageClass": "coverage-high", "linesTotal": "14", "linesExec": "13", "linesCoverage": "92.9", "linesClass": "coverage-high", "functionsCoverage": "-", "functionsClass": "coverage-unknown", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.operator_new_helpers.hpp.10ec8559be501625623f69d468b2471b.html", "children": []}, {"name": "pair.hpp", "coverage": "88.4", "coverageClass": "coverage-medium", "linesTotal": "173", "linesExec": "153", "linesCoverage": "88.4", "linesClass": "coverage-medium", "functionsCoverage": "88.5", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.pair.hpp.14229466a97f280103cd55fb644a2cd1.html", "children": []}, {"name": "pair_key_mapped_of_value.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "8", "linesExec": "8", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.pair_key_mapped_of_value.hpp.72a79258a4d5f2da180db2cc2cc05fba.html", "children": []}, {"name": "placement_new.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "4", "linesExec": "4", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.placement_new.hpp.870320ae82cdda0b9898137c5ef83a5f.html", "children": []}, {"name": "pool_common_alloc.hpp", "coverage": "92.3", "coverageClass": "coverage-high", "linesTotal": "13", "linesExec": "12", "linesCoverage": "92.3", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.pool_common_alloc.hpp.14ac71208c49cdf11440feeb15e5e776.html", "children": []}, {"name": "singleton.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "38", "linesExec": "38", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.singleton.hpp.f09a0e20c33d2a86cde710bc6409e06d.html", "children": []}, {"name": "thread_mutex.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "13", "linesExec": "13", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.thread_mutex.hpp.d1ad68efb139e05ae240b983f04038f6.html", "children": []}, {"name": "tree.hpp", "coverage": "60.9", "coverageClass": "coverage-low", "linesTotal": "10636", "linesExec": "6481", "linesCoverage": "60.9", "linesClass": "coverage-low", "functionsCoverage": "66.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.tree.hpp.7f82d2b3c21535fea9a3f860bb8f72cc.html", "children": []}, {"name": "variadic_templates_tools.hpp", "coverage": "82.6", "coverageClass": "coverage-medium", "linesTotal": "334", "linesExec": "276", "linesCoverage": "82.6", "linesClass": "coverage-medium", "functionsCoverage": "86.1", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.variadic_templates_tools.hpp.659a909b1604c8687ab09b6d812eeb94.html", "children": []}]}, {"name": "pmr", "coverage": "85.8", "coverageClass": "coverage-medium", "linesTotal": "344", "linesExec": "295", "linesCoverage": "85.8", "linesClass": "coverage-medium", "functionsCoverage": "89.5", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": true, "link": "index.pmr.450f490f9c975b1fd80e7a80389dda94.html", "children": [{"name": "memory_resource.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "11", "linesExec": "11", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.memory_resource.hpp.ccbdb1b59a94cf9405ed40b0376e1cec.html", "children": []}, {"name": "polymorphic_allocator.hpp", "coverage": "91.6", "coverageClass": "coverage-high", "linesTotal": "190", "linesExec": "174", "linesCoverage": "91.6", "linesClass": "coverage-high", "functionsCoverage": "92.8", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.polymorphic_allocator.hpp.68e7a3093e28ffb16ff9621049bf9524.html", "children": []}, {"name": "pool_options.hpp", "coverage": "100.0", "coverageClass": "coverage-high", "linesTotal": "3", "linesExec": "3", "linesCoverage": "100.0", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.pool_options.hpp.8144dbb62b373e476e1e57e48cc3f4fc.html", "children": []}, {"name": "resource_adaptor.hpp", "coverage": "76.4", "coverageClass": "coverage-medium", "linesTotal": "140", "linesExec": "107", "linesCoverage": "76.4", "linesClass": "coverage-medium", "functionsCoverage": "81.6", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.resource_adaptor.hpp.ec7f22c8f74a7a6292066d9fab6b07f1.html", "children": []}]}, {"name": "adaptive_pool.hpp", "coverage": "54.2", "coverageClass": "coverage-low", "linesTotal": "424", "linesExec": "230", "linesCoverage": "54.2", "linesClass": "coverage-low", "functionsCoverage": "56.1", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.adaptive_pool.hpp.d106f56e06f852f6920c21cbcfbf9ca6.html", "children": []}, {"name": "allocator.hpp", "coverage": "66.4", "coverageClass": "coverage-low", "linesTotal": "372", "linesExec": "247", "linesCoverage": "66.4", "linesClass": "coverage-low", "functionsCoverage": "72.7", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.allocator.hpp.37841e2c2fca1b5f74dfa67d1a7a637d.html", "children": []}, {"name": "allocator_traits.hpp", "coverage": "68.8", "coverageClass": "coverage-low", "linesTotal": "10315", "linesExec": "7101", "linesCoverage": "68.8", "linesClass": "coverage-low", "functionsCoverage": "70.2", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.allocator_traits.hpp.0c309c10faec2cde866b9701b2f50249.html", "children": []}, {"name": "deque.hpp", "coverage": "72.7", "coverageClass": "coverage-low", "linesTotal": "964", "linesExec": "701", "linesCoverage": "72.7", "linesClass": "coverage-low", "functionsCoverage": "74.7", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.deque.hpp.9067471b93086856f07dc7093d3bd6c7.html", "children": []}, {"name": "devector.hpp", "coverage": "71.6", "coverageClass": "coverage-low", "linesTotal": "21270", "linesExec": "15231", "linesCoverage": "71.6", "linesClass": "coverage-low", "functionsCoverage": "83.5", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.devector.hpp.fc41db72462f8903adcc7ad85e396faf.html", "children": []}, {"name": "flat_map.hpp", "coverage": "72.8", "coverageClass": "coverage-low", "linesTotal": "4749", "linesExec": "3456", "linesCoverage": "72.8", "linesClass": "coverage-low", "functionsCoverage": "73.4", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.flat_map.hpp.d2719f58a935e1e3bbd3f181764759ac.html", "children": []}, {"name": "flat_set.hpp", "coverage": "75.3", "coverageClass": "coverage-medium", "linesTotal": "2130", "linesExec": "1603", "linesCoverage": "75.3", "linesClass": "coverage-medium", "functionsCoverage": "75.3", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.flat_set.hpp.c936f46eba6e1c07096bca2537ab54fa.html", "children": []}, {"name": "list.hpp", "coverage": "77.5", "coverageClass": "coverage-medium", "linesTotal": "6173", "linesExec": "4781", "linesCoverage": "77.5", "linesClass": "coverage-medium", "functionsCoverage": "81.3", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.list.hpp.560faac55340eef3f04e428e2b101aa0.html", "children": []}, {"name": "map.hpp", "coverage": "74.3", "coverageClass": "coverage-low", "linesTotal": "1690", "linesExec": "1256", "linesCoverage": "74.3", "linesClass": "coverage-low", "functionsCoverage": "76.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.map.hpp.f97958e14c24003cc47cfcf1f91282f5.html", "children": []}, {"name": "nest.hpp", "coverage": "71.2", "coverageClass": "coverage-low", "linesTotal": "2012", "linesExec": "1432", "linesCoverage": "71.2", "linesClass": "coverage-low", "functionsCoverage": "86.7", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.nest.hpp.c8995368c3374e2710e89979e64a6bd8.html", "children": []}, {"name": "new_allocator.hpp", "coverage": "80.1", "coverageClass": "coverage-medium", "linesTotal": "1284", "linesExec": "1028", "linesCoverage": "80.1", "linesClass": "coverage-medium", "functionsCoverage": "80.2", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.new_allocator.hpp.977be7bd8b06b10380d16d1924025bc8.html", "children": []}, {"name": "node_allocator.hpp", "coverage": "66.3", "coverageClass": "coverage-low", "linesTotal": "585", "linesExec": "388", "linesCoverage": "66.3", "linesClass": "coverage-low", "functionsCoverage": "73.4", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.node_allocator.hpp.9089cbfcf0aff4aa1c4c6ac7361ff9b3.html", "children": []}, {"name": "node_handle.hpp", "coverage": "38.8", "coverageClass": "coverage-low", "linesTotal": "996", "linesExec": "386", "linesCoverage": "38.8", "linesClass": "coverage-low", "functionsCoverage": "41.4", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.node_handle.hpp.0161c0610a4c0950616c40a07c6404bd.html", "children": []}, {"name": "scoped_allocator.hpp", "coverage": "95.6", "coverageClass": "coverage-high", "linesTotal": "1211", "linesExec": "1158", "linesCoverage": "95.6", "linesClass": "coverage-high", "functionsCoverage": "94.8", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.scoped_allocator.hpp.2d149810ffbef63af6c19f2c5106c6b4.html", "children": []}, {"name": "segtor.hpp", "coverage": "99.4", "coverageClass": "coverage-high", "linesTotal": "689", "linesExec": "685", "linesCoverage": "99.4", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.segtor.hpp.74900cfe352e104d15896343bc4bf809.html", "children": []}, {"name": "set.hpp", "coverage": "81.1", "coverageClass": "coverage-medium", "linesTotal": "1471", "linesExec": "1193", "linesCoverage": "81.1", "linesClass": "coverage-medium", "functionsCoverage": "80.8", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.set.hpp.626aad174d8fdbb7e692c663ea107d62.html", "children": []}, {"name": "slist.hpp", "coverage": "71.8", "coverageClass": "coverage-low", "linesTotal": "4183", "linesExec": "3005", "linesCoverage": "71.8", "linesClass": "coverage-low", "functionsCoverage": "74.3", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.slist.hpp.bf419ed599ecec10863a027384590332.html", "children": []}, {"name": "small_vector.hpp", "coverage": "55.7", "coverageClass": "coverage-low", "linesTotal": "2843", "linesExec": "1583", "linesCoverage": "55.7", "linesClass": "coverage-low", "functionsCoverage": "54.3", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.small_vector.hpp.aa3b596d04a831aaa58e9ae35aa7e974.html", "children": []}, {"name": "stable_vector.hpp", "coverage": "64.0", "coverageClass": "coverage-low", "linesTotal": "15518", "linesExec": "9928", "linesCoverage": "64.0", "linesClass": "coverage-low", "functionsCoverage": "69.5", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.stable_vector.hpp.bdd704723400e6b35d1d80e941e41750.html", "children": []}, {"name": "static_vector.hpp", "coverage": "73.0", "coverageClass": "coverage-low", "linesTotal": "626", "linesExec": "457", "linesCoverage": "73.0", "linesClass": "coverage-low", "functionsCoverage": "74.8", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.static_vector.hpp.6569dcc6f1938edb2f8c0d499bcfb172.html", "children": []}, {"name": "string.hpp", "coverage": "41.0", "coverageClass": "coverage-low", "linesTotal": "10038", "linesExec": "4113", "linesCoverage": "41.0", "linesClass": "coverage-low", "functionsCoverage": "51.8", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.string.hpp.df50c1191c78e8bd003abec78921a741.html", "children": []}, {"name": "throw_exception.hpp", "coverage": "72.0", "coverageClass": "coverage-low", "linesTotal": "25", "linesExec": "18", "linesCoverage": "72.0", "linesClass": "coverage-low", "functionsCoverage": "70.0", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.throw_exception.hpp.4132418bb69b1a5f838289e877bcd408.html", "children": []}, {"name": "uses_allocator_construction.hpp", "coverage": "4.5", "coverageClass": "coverage-low", "linesTotal": "44", "linesExec": "2", "linesCoverage": "4.5", "linesClass": "coverage-low", "functionsCoverage": "0.0", "functionsClass": "coverage-none", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.uses_allocator_construction.hpp.2a7bf90d9b81c506be4239cc66b2cc40.html", "children": []}, {"name": "vector.hpp", "coverage": "61.1", "coverageClass": "coverage-low", "linesTotal": "62636", "linesExec": "38301", "linesCoverage": "61.1", "linesClass": "coverage-low", "functionsCoverage": "70.3", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.vector.hpp.628c3b3a8e7492df38a849844a31095a.html", "children": []}]}, {"name": "src", "coverage": "89.9", "coverageClass": "coverage-medium", "linesTotal": "368", "linesExec": "331", "linesCoverage": "89.9", "linesClass": "coverage-medium", "functionsCoverage": "87.1", "functionsClass": "coverage-medium", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": true, "link": "index.src.25d902c24283ab8cfbac54dfa101ad31.html", "children": [{"name": "dlmalloc.cpp", "coverage": "57.7", "coverageClass": "coverage-low", "linesTotal": "52", "linesExec": "30", "linesCoverage": "57.7", "linesClass": "coverage-low", "functionsCoverage": "57.7", "functionsClass": "coverage-low", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.dlmalloc.cpp.c8aa6afdeccf648ad3831ea92e54a631.html", "children": []}, {"name": "global_resource.cpp", "coverage": "92.9", "coverageClass": "coverage-high", "linesTotal": "28", "linesExec": "26", "linesCoverage": "92.9", "linesClass": "coverage-high", "functionsCoverage": "92.3", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.global_resource.cpp.c72cb0c5b34b15e8b3ab596b8c158bc4.html", "children": []}, {"name": "monotonic_buffer_resource.cpp", "coverage": "97.5", "coverageClass": "coverage-high", "linesTotal": "80", "linesExec": "78", "linesCoverage": "97.5", "linesClass": "coverage-high", "functionsCoverage": "100.0", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.monotonic_buffer_resource.cpp.e929066bdc667961973ee9c445968b47.html", "children": []}, {"name": "pool_resource.cpp", "coverage": "94.3", "coverageClass": "coverage-high", "linesTotal": "122", "linesExec": "115", "linesCoverage": "94.3", "linesClass": "coverage-high", "functionsCoverage": "96.3", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.pool_resource.cpp.d50ad24e3f375155a5efd9b45e746730.html", "children": []}, {"name": "synchronized_pool_resource.cpp", "coverage": "95.9", "coverageClass": "coverage-high", "linesTotal": "49", "linesExec": "47", "linesCoverage": "95.9", "linesClass": "coverage-high", "functionsCoverage": "94.4", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.synchronized_pool_resource.cpp.71d1e8798601464641a9c5b3cbb362d5.html", "children": []}, {"name": "unsynchronized_pool_resource.cpp", "coverage": "94.6", "coverageClass": "coverage-high", "linesTotal": "37", "linesExec": "35", "linesCoverage": "94.6", "linesClass": "coverage-high", "functionsCoverage": "93.8", "functionsClass": "coverage-high", "branchesCoverage": "-", "branchesClass": "coverage-unknown", "isDirectory": false, "link": "index.unsynchronized_pool_resource.cpp.1d032f63774b5023fe059710468d2842.html", "children": []}]}];</script>
+  </body>
+
+</html>
